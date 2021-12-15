@@ -9,6 +9,8 @@ Authors@R: c(
 	     person("Anthony", "Ives", email="arives@wisc.edu", role = c("aut")
 	    )
 Maintainer: The package maintainer <biuliano@wisc.edu>
+URL: https://github.com/benjaminiuliano/scalescape
+BugReports: https://github.com/benjaminiuliano/scalescape/issues
 License: Creative Commons
 Encoding: UTF-8
 LazyData: true
