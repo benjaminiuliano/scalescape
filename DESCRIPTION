@@ -4,9 +4,9 @@ Title: Distance-Weighted Landscape Analysis
 Description: User-friendly way to estimate distance-weighted landscape effects on an environmental response.
 Version: 0.0.0.9000
 Authors@R: c(
-             person("Erin", "Lowe", email = "eblowe@wisc.edu", role = c("aut", "cre"))
-	     person("Benjamin", "Iuliano", email="biuliano@wisc.edu", role = c("aut", "cre")
-	     person("Anthony", "Ives", email="arives@wisc.edu", role = c("aut")
+             person("Erin", "Lowe", email = "eblowe@wisc.edu", role = c("aut", "cre")),
+	     person("Benjamin", "Iuliano", email="biuliano@wisc.edu", role = c("aut", "cre"),
+	     person("Anthony", "Ives", email="arives@wisc.edu", role = c("aut"))
 	    )
 Maintainer: The package maintainer <biuliano@wisc.edu>
 URL: https://github.com/benjaminiuliano/scalescape
