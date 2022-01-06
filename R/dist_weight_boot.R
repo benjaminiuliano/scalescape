@@ -47,6 +47,8 @@
 #'   \item a data frame of log-likelihood and deviance values for each iteration of the bootstrap
 #'   \item a data frame of coefficient values for each iteration of the bootstrap
 #'   }
+#'
+#'   @export
 
 dist_weight_boot <- function(mod.full, mod.reduced, data = NULL,
                              nboot = 2000, plot.fits = TRUE, verbose = FALSE, pb.flag = TRUE, n.breaks = NULL,

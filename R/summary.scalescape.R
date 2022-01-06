@@ -35,6 +35,8 @@
 #'   \item the call for the reduced (e.g., local) model
 #'   \item the observed deviance, bootstrap deviance, standard deviation, and corresponding p-value
 #'   }
+#'
+#'   @export
 
 
 summary.scalescape <- function(object, ...) {

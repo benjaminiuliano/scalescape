@@ -57,6 +57,8 @@
 #'    \item  the specified weighting function
 #'    \item  the specified maximum distance
 #'    }
+#'
+#'    @export
 
 
 dist_weight <- function(mod0, landscape.formula,
