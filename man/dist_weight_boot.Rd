@@ -7,7 +7,6 @@
 dist_weight_boot(
   mod.full,
   mod.reduced,
-  data = NULL,
   nboot = 2000,
   plot.fits = TRUE,
   verbose = FALSE,
@@ -16,16 +15,14 @@ dist_weight_boot(
   optim.method = "L-BFGS-B",
   lower = NULL,
   upper = NULL,
-  n.partition = 10
+  n.partition = 10,
+  data = NULL
 )
 }
 \arguments{
 \item{mod.full}{a \code{scalescape} object; the landscape model fitted by \code{dist_weight}.}
 
 \item{mod.reduced}{the corresponding "local" model object, without landscape variables.}
-
-\item{data}{a data frame with local and landscape predictors and response variables.
-By default, this is extracted from \code{mod.full}.}
 
 \item{nboot}{the number of bootstraps. To determine whether a variable is significant
 at the alpha level 0.05, \code{nboot=2000} should be used (default).}
@@ -47,19 +44,22 @@ See \code{optim()}.}
 
 \item{n.partition}{number of partitions to divide the log-likelihood profile, in order
 to avoid identifying false maxima.}
+
+\item{data}{a data frame with local and landscape predictors and response variables.
+By default, this is extracted from \code{mod.full}.}
 }
 \value{
 \code{dist_weight_boot} returns an object of class \code{scalescape.boot}. This is a list
 containing the following:
 \itemize{
-  \item the full model
-  \item the reduced model
-  \item the deviance value of the full vs. reduced model
-  \item the mean deviance value of the bootstraps
-  \item the standard deviation of the bootstrap deviance values
-  \item the P value for the bootstrap likelihood ratio test
-  \item a data frame of log-likelihood and deviance values for each iteration of the bootstrap
-  \item a data frame of coefficient values for each iteration of the bootstrap
+  \item \code{mod.full} the full model
+  \item \code{mod.reduced} the reduced model
+  \item \code{dev} the deviance value of the full vs. reduced model
+  \item \code{mean.dev} the mean deviance value of the bootstraps
+  \item \code{sd.dev} the standard deviation of the bootstrap deviance values
+  \item \code{P} the P value for the bootstrap likelihood ratio test
+  \item \code{logLik.values} a data frame of log-likelihood and deviance values for each iteration of the bootstrap
+  \item \code{coef} a data frame of coefficient values for each iteration of the bootstrap
   }
 
   @export

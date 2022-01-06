@@ -3,17 +3,16 @@
 #'
 #' \code{dist_weight} fits a specified model containing local and landscape variables.
 #'
-#' \code{dist_weight} fits the model using the function \code{optim} (Brent for 1-D
-#' and L-BFGS-B for >1D problems) to find the values of the model parameters that
-#' maximize the log-likelihood of the model fit to the data. It can be run with many
-#' types of regression models in R: \code{lm} and \code{glm} in base R,
-#' \code{lmer} and \code{glmer} in \code{lme4}, and \code{lme} and \code{gls}
-#' in \code{nlme.} It adopts the model syntax of the specified regression model,
-#' making it easy to use models of any type.Although \code{dist_weight} produces
-#' p-values for the regression coefficients (given by the underlying \code{lm},
-#' \code{glm}, \code{lmer}, \code{glmer}, \code{lme}, or \code{gls} functions,
-#' these p-values are conditional on the estimate of the range parameter, and
-#' consequently they will likely have inflated type I error rates. The
+#' \code{dist_weight} fits the model using the function \code{optim} (method L-BFGS-B)
+#' to find the values of the model parameters that maximize the log-likelihood of the
+#' model fit to the data. It can be run with many types of regression models in R:
+#' \code{lm} and \code{glm} in base R, \code{lmer} and \code{glmer} in \code{lme4},
+#' and \code{lme} and \code{gls} in \code{nlme.} It adopts the model syntax of the
+#' specified regression model,making it easy to use models of any type.Although
+#' \code{dist_weight} producesp-values for the regression coefficients (given by the
+#' underlying \code{lm},\code{glm}, \code{lmer}, \code{glmer}, \code{lme}, or
+#' \code{gls} functions,these p-values are conditional on the estimate of the range
+#' parameter, and consequently they will likely have inflated type I error rates. The
 #' \code{dist_weight_boot}function uses a bootstrap likelihood ratio test to generate
 #' a single p-value for the landscape predictor variable(s) in the model. By
 #' bootstrapping, it accounts for the co-dependence of regression coefficient and
@@ -21,8 +20,8 @@
 #' \code{dist_weight_boot} rather than \code{dist_weight}.
 #'
 #' @param mod0 a "local" model object, without landscape variables.
-#' @param landscape.formula formula containing the landscape predictors.
 #' @param landscape.vars list of names landscape matrices (one for each landscape variable).
+#' @param landscape.formula formula containing the landscape predictors.
 #' @param data a data frame with local predictors and response variables, where
 #' each row as a site sorted in the same order as the original site data frame.
 #' @param weight.fn the type of weighting function to use; "Gaussian" (default) or "exponential".
@@ -42,28 +41,29 @@
 #' @return \code{dist_weight} returns an object of class \code{scalescape}. This is a list
 #' containing the following:
 #' \itemize{
-#'    \item the estimate of the range value
-#'    \item the maximum likelihood value
-#'    \item  AIC value for model fit
-#'    \item  BIC value for model fit
-#'    \item  the number of model parameters
-#'    \item  the original (local) data frame used to fit the model
-#'    \item  the coefficient of the landscape variable(s)
-#'    \item  the landscape model, with distance-weighted landscape effect
-#'    \item  the local model, without landscape effects
-#'    \item  the formula specified to fit the landscape model
-#'    \item  a data frame that contains the original local variable and distance-weighted landscape variable(s)
-#'    \item  the list of landscape matrices for each landscape variable
-#'    \item  the specified weighting function
-#'    \item  the specified maximum distance
+#'    \item \code{opt.range} the estimate of the range value
+#'    \item \code{logLik} the maximum likelihood value
+#'    \item \code{AIC} AIC value for model fit
+#'    \item \code{BIC} BIC value for model fit
+#'    \item \code{npar} the number of model parameters
+#'    \item \code{data} the original (local) data frame used to fit the model
+#'    \item \code{coef} the coefficient of the landscape variable(s)
+#'    \item \code{mod} the landscape model, with distance-weighted landscape effect
+#'    \item \code{mod0} the local model, without landscape effects
+#'    \item \code{landscape.formula} the formula specified to fit the landscape model
+#'    \item \code{data.with.landscape} a data frame that contains the original local variable and distance-weighted landscape variable(s)
+#'    \item \code{landscape.vars} the list of landscape matrices for each landscape variable
+#'    \item \code{weight.fn} the specified weighting function
+#'    \item \code{max.Dist} the specified maximum distance
 #'    }
 #'
 #' @export
 
 
-dist_weight <- function(mod0, landscape.formula,
-                        data = NULL, landscape.vars, init.range = NULL, opt.range = NULL, weight.fn = "Gaussian",
-                        plot.fits = TRUE, optim.method = "L-BFGS-B", lower = NULL, upper = NULL, n.partition = 10){
+dist_weight <- function(mod0, landscape.vars, landscape.formula,
+                        data = NULL, weight.fn = "Gaussian",  plot.fits = TRUE,
+                        lower = NULL, upper = NULL, init.range = NULL, n.partition = 10,
+                        opt.range = NULL, optim.method = "L-BFGS-B"){
 
   new.vars <- names(landscape.vars)
   mod0.vars <- row.names(attr(terms(formula(mod0)), "factors"))

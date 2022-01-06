@@ -14,6 +14,9 @@ sf object, or sp object.}
 
 \item{max.radius}{The maximum radius you wish to evaluate. Must be less than the
 maximum extent of the raster.}
+
+\item{is.factor}{Specify whether landscape variable is continuous or binary (FALSE, default)
+or a factor with more than two levels (TRUE).}
 }
 \value{
 A matrix used by \code{dist_weight} to do the weighting and fit the model.

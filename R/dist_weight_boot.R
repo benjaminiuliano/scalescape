@@ -38,21 +38,22 @@
 #' @return \code{dist_weight_boot} returns an object of class \code{scalescape.boot}. This is a list
 #' containing the following:
 #' \itemize{
-#'   \item the full model
-#'   \item the reduced model
-#'   \item the deviance value of the full vs. reduced model
-#'   \item the mean deviance value of the bootstraps
-#'   \item the standard deviation of the bootstrap deviance values
-#'   \item the P value for the bootstrap likelihood ratio test
-#'   \item a data frame of log-likelihood and deviance values for each iteration of the bootstrap
-#'   \item a data frame of coefficient values for each iteration of the bootstrap
+#'   \item \code{mod.full} the full model
+#'   \item \code{mod.reduced} the reduced model
+#'   \item \code{dev} the deviance value of the full vs. reduced model
+#'   \item \code{mean.dev} the mean deviance value of the bootstraps
+#'   \item \code{sd.dev} the standard deviation of the bootstrap deviance values
+#'   \item \code{P} the P value for the bootstrap likelihood ratio test
+#'   \item \code{logLik.values} a data frame of log-likelihood and deviance values for each iteration of the bootstrap
+#'   \item \code{coef} a data frame of coefficient values for each iteration of the bootstrap
 #'   }
 #'
 #'   @export
 
-dist_weight_boot <- function(mod.full, mod.reduced, data = NULL,
-                             nboot = 2000, plot.fits = TRUE, verbose = FALSE, pb.flag = TRUE, n.breaks = NULL,
-                             optim.method = "L-BFGS-B", lower = NULL, upper = NULL, n.partition = 10){
+dist_weight_boot <- function(mod.full, mod.reduced, nboot = 2000, plot.fits = TRUE,
+                             verbose = FALSE, pb.flag = TRUE, n.breaks = NULL,
+                             optim.method = "L-BFGS-B", lower = NULL, upper = NULL,
+                             n.partition = 10, data = NULL){
 
   if(!class(mod.full)[1] == "scalescape") stop("The bootstrap must be performed on full model that is a scalescape object.")
 

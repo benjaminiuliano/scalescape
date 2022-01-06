@@ -156,3 +156,4 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
     return(landscape.list)
   }
 }
+
