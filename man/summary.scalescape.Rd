@@ -29,6 +29,8 @@ summary statistics of the fitted model given in \code{object}, including:
   \item the call for the reduced (e.g., local) model
   \item the observed deviance, bootstrap deviance, standard deviation, and corresponding p-value
   }
+
+  @export
 }
 \description{
 \code{summary} method for classes \code{scalescape} and \code{scalescape.boot}

@@ -68,6 +68,8 @@ containing the following:
    \item  the specified weighting function
    \item  the specified maximum distance
    }
+
+   @export
 }
 \description{
 \code{dist_weight} fits a specified model containing local and landscape variables.
