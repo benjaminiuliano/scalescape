@@ -32,7 +32,6 @@
 #'   maximum extent of the raster.
 #'
 #' @return A matrix used by \code{dist_weight} to do the weighting and fit the model.
-#'
 #' @export
 
 landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {

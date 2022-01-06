@@ -36,7 +36,7 @@
 #'   \item the observed deviance, bootstrap deviance, standard deviation, and corresponding p-value
 #'   }
 #'
-#'   @export
+#' @export
 
 
 summary.scalescape <- function(object, ...) {

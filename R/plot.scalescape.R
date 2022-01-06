@@ -16,7 +16,6 @@
 #' }
 #'
 #' @param object an object of class \code{scalescape} or \code{scalescape.boot}
-#'
 #' @export
 
 plot.scalescape <- function(object, ...) {

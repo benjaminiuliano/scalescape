@@ -58,7 +58,7 @@
 #'    \item  the specified maximum distance
 #'    }
 #'
-#'    @export
+#' @export
 
 
 dist_weight <- function(mod0, landscape.formula,
