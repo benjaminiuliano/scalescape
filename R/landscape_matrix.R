@@ -30,6 +30,8 @@
 #'   sf object, or sp object.
 #' @param max.radius The maximum radius you wish to evaluate. Must be less than the
 #'   maximum extent of the raster.
+#' @param is.factor Specify whether landscape variable is continuous or binary (FALSE, default)
+#' or a factor with more than two levels (TRUE).
 #'
 #' @return A matrix used by \code{dist_weight} to do the weighting and fit the model.
 #'
