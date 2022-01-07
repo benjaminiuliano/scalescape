@@ -19,8 +19,6 @@
 #'
 #' @param mod.full a \code{scalescape} object; the landscape model fitted by \code{dist_weight}.
 #' @param mod.reduced the corresponding "local" model object, without landscape variables.
-#' @param data a data frame with local and landscape predictors and response variables.
-#' By default, this is extracted from \code{mod.full}.
 #' @param nboot the number of bootstraps. To determine whether a variable is significant
 #' at the alpha level 0.05, \code{nboot=2000} should be used (default).
 #' @param plot.fits produce histograms of the bootstrapped range and deviance values (default = TRUE).
@@ -33,7 +31,8 @@
 #' @param upper upper bound on the variables for the \code{"L-BFGS-B"} method. See \code{optim()}.
 #' @param n.partition number of partitions to divide the log-likelihood profile, in order
 #' to avoid identifying false maxima.
-#'
+#' @param data a data frame with local and landscape predictors and response variables.
+#' By default, this is extracted from \code{mod.full}.
 #'
 #' @return \code{dist_weight_boot} returns an object of class \code{scalescape.boot}. This is a list
 #' containing the following:
