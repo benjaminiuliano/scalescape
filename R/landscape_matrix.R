@@ -92,10 +92,7 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
       }
     }
     dat.site <- dat.site[dat.site$dist <= 1, ]
-    landscape.matrix <- as.matrix(dat.site)
-    landscape.matrix <- landscape.matrix[,-c(1,2)]
-    landscape.matrix[,1] <- max.radius * landscape.matrix[,1]
-    return(landscape.matrix)
+    return(dat.site)
   } else {
     landscape.list <- list()
     for (i.level in 2:length(unique(raster))) {
