@@ -38,12 +38,17 @@
 #' @export
 
 landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
+  browser()
   max.radius <- ceiling(max.radius/res(raster)[1])*res(raster)[1]
+  browser()
   n.rows <- 2 * max.radius/res(raster)[1]
-
+  browswer()
   if (!is.factor || length(unique(raster)) == 2) {
+    browser()
     dat.site <- data.frame(X = 2*rep(0:(n.rows - 1), times = n.rows)/(n.rows - 1), Y = 2*rep(0:(n.rows - 1), each = n.rows)/(n.rows - 1))
+    browser()
     dat.site$dist <- apply(dat.site, 1, FUN = function(x) sqrt((x[1] - 1)^2 + (x[2] - 1)^2))
+    browser()
     dat.site$dist <- dat.site$dist/dat.site$dist[max.radius/res(raster)[1]]
 
     if (class(sites)[1] == "data.frame") {
