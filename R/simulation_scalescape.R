@@ -1,4 +1,4 @@
-#simulate.scalescape
+#simulation_scalescape
 #' Simulate a distance-weighted model of landscape effects on an environmental response
 #'
 #' \code{simulate} method for class \code{scalescape}.Currently only available for linear models
@@ -13,11 +13,11 @@
 #' @param nsim number of simulations (default = 1)
 #'
 #'
-#' @return \code{simulate.scalescape} returns a data frame of predictor and simulated response variables.
+#' @return \code{simulation_scalescape} returns a data frame of predictor and simulated response variables.
 #'
 #' @export
 
-simulate.scalescape <- function(mod.full, mod.reduced, new.coef, new.range, new.sigma = NULL, data = NULL, nsim = 1){
+simulation_scalescape <- function(mod.full, mod.reduced, new.coef, new.range, new.sigma = NULL, data = NULL, nsim = 1){
 
   landscape.formula <- mod.full$landscape.formula
   landscape.vars <- mod.full$landscape.vars
@@ -87,10 +87,9 @@ simulate.scalescape <- function(mod.full, mod.reduced, new.coef, new.range, new.
   if(is.element(class(mod.sim)[1], c("lme","gls","glm"))) {
 
     stop("Sorry, this doesn't work yet for glm, lme or gls")
-    require(mvtnorm)
     value <- mod.sim$modelStruct[[length(mod.sim$modelStruct)]]
     corGaus. <- Initialize(corGaus(value = value, form = ~ x + y, nugget = (length(value) > 1)), data=data)
     V <- mod0$sigma^2 * corMatrix(corGaus.)
-    data.sim[, which(names(data) == formula(mod.sim)[[2]])] <- fitted(mod.sim.update) + t(rmvnorm(n = 1, sigma = V))
+    data.sim[, which(names(data) == formula(mod.sim)[[2]])] <- fitted(mod.sim.update) + t(mvtnorm::rmvnorm(n = 1, sigma = V))
   }
 }
