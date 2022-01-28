@@ -84,7 +84,7 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
         y.max <- site@coords[1, 2] + max.radius
         extent.site <- raster::extent(x.min, x.max, y.min, y.max)
         site.crop <- raster::crop(raster, extent.site)
-        site.matrix <- as.matrix(site.crop, ncol = n.rows)
+        site.matrix <- raster::as.matrix(site.crop, ncol = n.rows)
         site.matrix <- t(site.matrix)
         if (nrow(dat.site) > nrow(matrix(site.matrix, ncol=1))) stop("Maximum radius is outside the bounds of raster extent. Choose a smaller value for max.radius")
         dat.site <- cbind(dat.site, matrix(site.matrix, ncol = 1))
