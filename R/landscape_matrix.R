@@ -54,7 +54,7 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
         y.max <- site[1,2] + max.radius
         extent.site <- raster::extent(x.min, x.max, y.min, y.max)
         site.crop <- raster::crop(raster, extent.site)
-        site.matrix <- t(as.matrix(site.crop, ncol = n.rows))
+        site.matrix <- t(raster::as.matrix(site.crop, ncol = n.rows))
         if (nrow(dat.site) > nrow(matrix(site.matrix, ncol=1))) stop("Maximum radius is outside the bounds of raster extent. Choose a smaller value for max.radius")
         dat.site <- cbind(dat.site, matrix(site.matrix, ncol = 1))
         names(dat.site)[i + 3] <- paste0("landclass.", i)
@@ -69,7 +69,7 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
         y.max <- site[2] + max.radius
         extent.site <- raster::extent(x.min, x.max, y.min, y.max)
         site.crop <- raster::crop(raster, extent.site)
-        site.matrix <- t(as.matrix(site.crop, ncol = n.rows))
+        site.matrix <- t(raster::as.matrix(site.crop, ncol = n.rows))
         if (nrow(dat.site) > nrow(matrix(site.matrix, ncol=1))) stop("Maximum radius is outside the bounds of raster extent. Choose a smaller value for max.radius")
         dat.site <- cbind(dat.site, matrix(site.matrix, ncol = 1))
         names(dat.site)[i + 3] <- paste0("landclass.", i)
@@ -83,9 +83,8 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
         y.min <- site@coords[1, 2] - max.radius
         y.max <- site@coords[1, 2] + max.radius
         extent.site <- raster::extent(x.min, x.max, y.min, y.max)
-        site.crop <- raster::crop(raster, extent.site)
-        site.matrix <- raster::as.matrix(site.crop, ncol = n.rows)
-        site.matrix <- t(site.matrix)
+        site.crop <- raster::crop(raster::raster, extent.site)
+        site.matrix <- t(raster::as.matrix(site.crop, ncol = n.rows))
         if (nrow(dat.site) > nrow(matrix(site.matrix, ncol=1))) stop("Maximum radius is outside the bounds of raster extent. Choose a smaller value for max.radius")
         dat.site <- cbind(dat.site, matrix(site.matrix, ncol = 1))
         names(dat.site)[i + 3] <- paste0("landclass.", i)
@@ -112,7 +111,7 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
           y.max <- site[1,2] + max.radius
           extent.site <- raster::extent(x.min, x.max, y.min, y.max)
           site.crop <- raster::crop(raster, extent.site)
-          site.matrix <- t(as.matrix(site.crop, ncol = n.rows))
+          site.matrix <- t(raster::as.matrix(site.crop, ncol = n.rows))
           if (nrow(dat.site) > nrow(matrix(site.matrix, ncol=1))) stop("Maximum radius is outside the bounds of raster extent. Choose a smaller value for max.radius")
           dat.site <- cbind(dat.site, matrix(site.matrix, ncol = 1))
           names(dat.site)[i + 3] <- paste0("landclass.", i)
@@ -127,7 +126,7 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
           y.max <- site[2] + max.radius
           extent.site <- raster::extent(x.min, x.max, y.min, y.max)
           site.crop <- raster::crop(raster, extent.site)
-          site.matrix <- t(as.matrix(site.crop, ncol = n.rows))
+          site.matrix <- t(raster::as.matrix(site.crop, ncol = n.rows))
           if (nrow(dat.site) > nrow(matrix(site.matrix, ncol=1))) stop("Maximum radius is outside the bounds of raster extent. Choose a smaller value for max.radius")
           dat.site <- cbind(dat.site, matrix(site.matrix, ncol = 1))
           names(dat.site)[i + 3] <- paste0("landclass.", i)
@@ -142,7 +141,7 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
           y.max <- site@coords[1, 2] + max.radius
           extent.site <- raster::extent(x.min, x.max, y.min, y.max)
           site.crop <- raster::crop(raster, extent.site)
-          site.matrix <- t(as.matrix(site.crop, ncol = n.rows))
+          site.matrix <- t(raster::as.matrix(site.crop, ncol = n.rows))
           if (nrow(dat.site) > nrow(matrix(site.matrix, ncol=1))) stop("Maximum radius is outside the bounds of raster extent. Choose a smaller value for max.radius")
           dat.site <- cbind(dat.site, matrix(site.matrix, ncol = 1))
           names(dat.site)[i + 3] <- paste0("landclass.", i)
