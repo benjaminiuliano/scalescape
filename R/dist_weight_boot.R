@@ -85,7 +85,7 @@ dist_weight_boot <- function(mod.full, mod.reduced, nboot = 2000, plot.fits = TR
       value <- mod.sim$modelStruct[[length(mod.sim$modelStruct)]]
       corGaus. <- Initialize(corGaus(value = value, form = ~ x + y, nugget = (length(value) > 1)), data=data)
       V <- mod0$sigma^2 * corMatrix(corGaus., corr=T)
-      dat.boot[, which(names(data) == formula(mod.sim)[[2]])] <- fitted(mod.sim) + t(rmvnorm(n = 1, sigma = V))
+      dat.boot[, which(names(data) == formula(mod.sim)[[2]])] <- fitted(mod.sim) + t(mvtnorm::rmvnorm(n = 1, sigma = V))
     }
 
     mod0.boot <- try(update(mod0, data=dat.boot))

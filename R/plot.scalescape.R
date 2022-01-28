@@ -19,7 +19,7 @@
 #'
 #' @export
 
-plot.scalescape <- function(object, ...) {
+plot.scalescape <- function(x, ...) {
   if(!is.element("scalescape.boot", class(object))) {
     sol <- weighting_funct(object$opt.range, mod0=object$mod0, landscape.formula = object$landscape.formula,
                            data = object$data, max.Dist = object$max.Dist, landscape.vars=object$landscape.vars, weight.fn = object$weight.fn, return.coef = T)
