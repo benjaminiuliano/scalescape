@@ -108,7 +108,7 @@ dist_weight <- function(mod0, landscape.vars, landscape.formula,
         for(i in 1:n.partition) {
           par <- opt.init.range
           par[i.range] <- i/(n.partition+1)
-          z <- weighting_funct(par=par, mod0=mod0, landscape.formula = landscape.formula,
+          z <- scalescape:::weighting_funct(par=par, mod0=mod0, landscape.formula = landscape.formula,
                                data = data, max.Dist = max.Dist, landscape.vars=landscape.vars, weight.fn = weight.fn, return.coef = T)
 
           if(z$logLik > opt.logLik){
@@ -144,12 +144,12 @@ dist_weight <- function(mod0, landscape.vars, landscape.formula,
       lower=NULL
       upper=NULL
     }
-    opt.range <- optim(par=init.range, fn=weighting_funct, method=optim.method, upper = upper, lower = lower, mod0=mod0, data = data, max.Dist = max.Dist, landscape.formula = landscape.formula, landscape.vars=landscape.vars, weight.fn = weight.fn)$par
+    opt.range <- optim(par=init.range, fn=scalescape:::weighting_funct, method=optim.method, upper = upper, lower = lower, mod0=mod0, data = data, max.Dist = max.Dist, landscape.formula = landscape.formula, landscape.vars=landscape.vars, weight.fn = weight.fn)$par
     names(opt.range) <- new.vars
   } else {
     opt.range <- opt.range/max.Dist
   }
-  sol <- weighting_funct(opt.range, mod0 = mod0, landscape.formula = landscape.formula,
+  sol <- scalescape:::weighting_funct(opt.range, mod0 = mod0, landscape.formula = landscape.formula,
                          data = data, max.Dist = max.Dist, landscape.vars=landscape.vars, weight.fn = weight.fn, return.coef = T)
 
   npar <- length(sol$coef) + length(opt.range) + 1
@@ -163,7 +163,7 @@ dist_weight <- function(mod0, landscape.vars, landscape.formula,
       for(i in 1:199) {
         opt.par <- opt.range
         opt.par[i.range] <- .005*i
-        z <- weighting_funct(par=opt.par, mod0=mod0, landscape.formula = landscape.formula,
+        z <- scalescape:::weighting_funct(par=opt.par, mod0=mod0, landscape.formula = landscape.formula,
                              data = data, max.Dist = max.Dist, landscape.vars=landscape.vars, weight.fn = weight.fn, return.coef = T)
         if(length(z)>1){
           w$logLik[i] <- z$logLik
