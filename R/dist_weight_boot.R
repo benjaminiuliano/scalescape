@@ -47,7 +47,9 @@
 #'   \item \code{coef} a data frame of coefficient values for each iteration of the bootstrap
 #'   }
 #'
-#'   @export
+#' @import utils stats methods graphics
+#'
+#' @export
 
 dist_weight_boot <- function(mod.full, mod.reduced, nboot = 2000, plot.fits = TRUE,
                              verbose = FALSE, pb.flag = TRUE, n.breaks = NULL,
@@ -83,8 +85,8 @@ dist_weight_boot <- function(mod.full, mod.reduced, nboot = 2000, plot.fits = TR
       dat.boot[, which(names(data) == formula(mod.sim)[[2]])] <- as.matrix(simulate(mod.sim, nsim=1)[[1]])
     if(is.element(class(mod.sim)[1], c("lme","gls"))) {
       value <- mod.sim$modelStruct[[length(mod.sim$modelStruct)]]
-      corGaus. <- Initialize(corGaus(value = value, form = ~ x + y, nugget = (length(value) > 1)), data=data)
-      V <- mod0$sigma^2 * corMatrix(corGaus., corr=T)
+      corGaus. <- nlme::Initialize(nlme::corGaus(value = value, form = ~ x + y, nugget = (length(value) > 1)), data=data)
+      V <- mod0$sigma^2 * nlme::corMatrix(corGaus., corr=T)
       dat.boot[, which(names(data) == formula(mod.sim)[[2]])] <- fitted(mod.sim) + t(mvtnorm::rmvnorm(n = 1, sigma = V))
     }
 

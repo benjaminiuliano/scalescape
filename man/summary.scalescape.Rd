@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{object}{an object of class \code{scalescape} or \code{scalescape.boot}}
+
+\item{...}{additional arguments affecting the summary produced}
 }
 \value{
 For objects of class \code{scalescape},  \code{summary.scalescape} returns a list of

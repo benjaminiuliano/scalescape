@@ -57,6 +57,7 @@
 #'    \item \code{max.Dist} the specified maximum distance
 #'    }
 #'
+#' @import stats methods graphics
 #' @export
 
 
@@ -81,7 +82,7 @@ dist_weight <- function(mod0, landscape.vars, landscape.formula,
   }
   if(class(mod0)[1] == "gls" && mod0$method == "REML"){
     warning("For gls(), fitting show be with method = ML. Therefore, we refit your model.")
-    mod0 <- update(mod0, method="ML")
+    mod0 <- stats::update(mod0, method="ML")
   }
 
   max.Dist <- NULL
@@ -155,37 +156,6 @@ dist_weight <- function(mod0, landscape.vars, landscape.formula,
   AIC <- 2*npar - 2*sol$logLik
   BIC <- 2*npar*log(nrow(data)) - 2*sol$logLik
 
-  # if(plot.fits){
-  # par(mfrow=c(length(opt.range),2), mai=c(1,1,.3,.3))
-  # for(i.range in 1:length(opt.range)){
-  # w <- data.frame(range=max.Dist[i.range] * .005*(1:199), logLik = NA, b = NA)
-  # for(i in 1:199) {
-  # opt.par <- opt.range
-  # opt.par[i.range] <- .005*i
-  # z <- weighting_funct(par=opt.par, mod0=mod0, landscape.formula = landscape.formula,
-  # data = data, max.Dist = max.Dist, landscape.vars=landscape.vars, weight.fn = weight.fn, return.coef = T)
-  # if(length(z)>1){
-  # w$logLik[i] <- z$logLik
-  # }
-  # }
-
-  # #1
-  # plot(logLik ~ range, data=w, typ="l", xlab="Distance", ylab="logLik")
-  # points(max.Dist[i.range] * opt.range[i.range], w$logLik, col="red")
-  # mtext(side=3, paste0("Range for ",new.vars[i.range]," = ",round(max.Dist[i.range]*opt.range[i.range], digits=3)))
-
-  # #2
-  # # Gaussian weightings
-  # if(weight.fn=="Gaussian") curve(exp(-0.5*(x/(max.Dist[i.range] * opt.range[i.range]))^2),
-  # from = 0, to = max.Dist[i.range], ylim=c(0,1), xlab="Distance", ylab="Weighting")
-  # abline(v=max.Dist[i.range]*opt.range[i.range], col="red", lty=2)
-
-  # # exponential weightings
-  # if(weight.fn=="exponential") curve(exp(-x/(max.Dist[i.range] * opt.range[i.range])),
-  # from = 0, to = max.Dist[i.range], ylim=c(0,1), xlab="Distance", ylab="Weighting")
-  # abline(v=max.Dist[i.range]*opt.range[i.range], col="red", lty=2)
-  # }
-  # }
   if(plot.fits){
     par(mfrow=c(length(opt.range),2), mai=c(1,1,.3,.3))
     for(i.range in 1:length(opt.range)){

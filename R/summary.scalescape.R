@@ -14,6 +14,7 @@
 #' \code{dist_weight_boot} rather than \code{dist_weight}.
 #'
 #' @param object an object of class \code{scalescape} or \code{scalescape.boot}
+#' @param ... additional arguments affecting the summary produced
 #'
 #'
 #' @return For objects of class \code{scalescape},  \code{summary.scalescape} returns a list of

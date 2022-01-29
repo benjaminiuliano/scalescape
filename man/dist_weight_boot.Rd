@@ -61,8 +61,6 @@ containing the following:
   \item \code{logLik.values} a data frame of log-likelihood and deviance values for each iteration of the bootstrap
   \item \code{coef} a data frame of coefficient values for each iteration of the bootstrap
   }
-
-  @export
 }
 \description{
 \code{dist_weight_boot} conducts a parametric bootstrap test of the null hypothesis that one or

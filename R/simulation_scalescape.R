@@ -15,6 +15,8 @@
 #'
 #' @return \code{simulation_scalescape} returns a data frame of predictor and simulated response variables.
 #'
+#' @import stats methods
+#'
 #' @export
 
 simulation_scalescape <- function(mod.full, mod.reduced, new.coef, new.range, new.sigma = NULL, data = NULL, nsim = 1){
@@ -88,8 +90,8 @@ simulation_scalescape <- function(mod.full, mod.reduced, new.coef, new.range, ne
 
     stop("Sorry, this doesn't work yet for glm, lme or gls")
     value <- mod.sim$modelStruct[[length(mod.sim$modelStruct)]]
-    corGaus. <- Initialize(corGaus(value = value, form = ~ x + y, nugget = (length(value) > 1)), data=data)
-    V <- mod0$sigma^2 * corMatrix(corGaus.)
-    data.sim[, which(names(data) == formula(mod.sim)[[2]])] <- fitted(mod.sim.update) + t(mvtnorm::rmvnorm(n = 1, sigma = V))
+    corGaus. <- nlme::Initialize(nlme::corGaus(value = value, form = ~ x + y, nugget = (length(value) > 1)), data=data)
+    V <- mod0$sigma^2 * nlme::corMatrix(corGaus.)
+    data.sim[, which(names(data) == formula(mod.sim)[[2]])] <- fitted(mod.sim) + t(mvtnorm::rmvnorm(n = 1, sigma = V))
   }
 }

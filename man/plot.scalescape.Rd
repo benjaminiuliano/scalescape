@@ -4,7 +4,7 @@
 \alias{plot.scalescape}
 \title{Plotting scalescape objects}
 \usage{
-\method{plot}{scalescape}(object, ...)
+\method{plot}{scalescape}(x, ...)
 }
 \arguments{
 \item{object}{an object of class \code{scalescape} or \code{scalescape.boot}}

@@ -62,7 +62,7 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
     }
     if (class(sites)[1] == "sf") {
       for (i in 1:nrow(sites)) {
-        site <- st_coordinates(sites)[i, ]
+        site <- sf::st_coordinates(sites)[i, ]
         x.min <- site[1] - max.radius
         x.max <- site[1] + max.radius
         y.min <- site[2] - max.radius
@@ -119,7 +119,7 @@ landscape_matrix <- function(raster, sites, max.radius, is.factor = FALSE) {
       }
       if (class(sites)[1] == "sf") {
         for (i in 1:nrow(sites)) {
-          site <- st_coordinates(sites)[i, ]
+          site <- sf::st_coordinates(sites)[i, ]
           x.min <- site[1] - max.radius
           x.max <- site[1] + max.radius
           y.min <- site[2] - max.radius

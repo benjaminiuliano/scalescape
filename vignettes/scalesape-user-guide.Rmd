@@ -1,0 +1,27 @@
+---
+title: "Scalescape User Guide"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Scalesape User Guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(scalescape)
+```
+
+The following example goes with the "Using 'scalescape'" section of Lowe et al. 2021. Data for this example were simulated using empirical data from a landscape-scale experiment examining the effects of local and landscape drivers of wild bee communities in an agricultural region of Wisconsin, USA. In this experiment, 18 commercial cucumber fields were selected along a gradient from crop-dominated to forest- and grassland-dominated landscapes. Data collected at each cucumber field included air temperature, field margin flower cover and richness (collated into a “floral index”), and wild bee abundance.
+
+#Running scalescape
+```{r}
+
+```
+
