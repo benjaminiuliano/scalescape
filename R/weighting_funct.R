@@ -39,8 +39,7 @@ weighting_funct <- function(par, mod0, landscape.formula,
       if(weight.fn=="Gaussian") weighting <- exp(-0.5*(Dist/par[i.count]/max.Dist[i.count])^2)
       if(weight.fn=="exponential") weighting <- exp(-Dist/par[i.count]/max.Dist[i.count])
 
-      weighting.t <- t(weighting)
-      landscape.data[as.character(i.terms)] <- t(weighting.t %*% landscape.vars[[i.terms]][, -1]/sum(weighting))
+      landscape.data[as.character(i.terms)] <- t(t(weighting) %*% landscape.vars[[i.terms]][, -1]/sum(weighting))
     }
     if(is.element("list",is(landscape.vars[[i.terms]]))) {
       i.count <- i.count + 1
