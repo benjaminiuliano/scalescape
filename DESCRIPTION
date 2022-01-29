@@ -9,13 +9,19 @@ Authors@R: c(person("Erin", "Lowe", email = "eblowe@wisc.edu", role = c("aut")),
 Maintainer: The package maintainer <biuliano@wisc.edu>
 URL: https://github.com/benjaminiuliano/scalescape
 BugReports: https://github.com/benjaminiuliano/scalescape/issues
-License: Creative Commons
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
-Imports: raster,
-	mvtnorm
-Suggests: 
+Imports:	stats,
+	methods, 
+	graphics,
+	raster,
+	mvtnorm,
+Suggests:
+    sf,
+    sp,
+    nlme,
     rmarkdown,
     knitr
 VignetteBuilder: knitr

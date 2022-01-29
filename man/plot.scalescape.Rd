@@ -7,7 +7,9 @@
 \method{plot}{scalescape}(x, ...)
 }
 \arguments{
-\item{object}{an object of class \code{scalescape} or \code{scalescape.boot}}
+\item{x}{an object of class \code{scalescape} or \code{scalescape.boot}}
+
+\item{...}{arguments to be passed to methods}
 }
 \description{
 \code{plot} method for classes \code{scalescape} and \code{scalescape.boot}. For objects of
