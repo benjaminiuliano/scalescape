@@ -102,7 +102,7 @@ dist_weight <- function(mod0, landscape.vars, landscape.formula,
     if(is.null(init.range)) {
       init.range <- rep(0.2, length(new.vars))
       opt.init.range <- init.range
-      z <- weighting_funct(par=init.range, mod0=mod0, landscape.formula = landscape.formula, data = data, max.Dist = max.Dist, landscape.vars=landscape.vars, weight.fn = weight.fn, return.coef = T)
+      z <- scalescape:::weighting_funct(par=init.range, mod0=mod0, landscape.formula = landscape.formula, data = data, max.Dist = max.Dist, landscape.vars=landscape.vars, weight.fn = weight.fn, return.coef = T)
       opt.logLik <- z$logLik
       for(i.range in 1:length(new.vars)){
         for(i in 1:n.partition) {
