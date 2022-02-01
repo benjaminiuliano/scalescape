@@ -4,7 +4,7 @@
 #'
 #' @docType data
 #'
-#' @usage data(scalescape.raster)
+#' @usage data(scalescape.landcover)
 #'
 #' @format An object of class \code{RasterLayer} with the following characteristics:
 #' \describe{
@@ -16,4 +16,4 @@
 #'   }
 #'
 #' @source https://nassgeodata.gmu.edu/CropScape/, Erin Lowe
-"scalescape.raster"
+"scalescape.landcover"

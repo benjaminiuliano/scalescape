@@ -1,0 +1,19 @@
+#' NDVI around sampling sites
+#'
+#' A continuous raster object showing remotely-sensed NDVI values around  wild bee sampling locations. Example from Lowe et al. 2021.
+#'
+#' @docType data
+#'
+#' @usage data(scalescape.ndvi)
+#'
+#' @format An object of class \code{RasterLayer} with the following characteristics:
+#' \describe{
+#'   \item{**dimensions**}{nrow=1539, ncol=1681, ncell=2587059}
+#'   \item{**resolution**}{x=30m, y=30m}
+#'   \item{**extent**}{xmin=547173.6, xmax=597603.6, ymin=389033, ymax=435203}
+#'   \item{**crs**}{+proj=tmerc +lat_0=0 +lon_0=-90 +k=0.9996 +x_0=520000 +y_0=-4480000 +ellps=GRS80 +units=m +no_defs}
+#'   \item{**values**}{min=22314.52, max=60729.35}
+#'   }
+#'
+#' @source https://earthexplorer.usgs.gov/, Erin Lowe
+"scalescape.ndvi"
