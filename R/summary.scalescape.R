@@ -58,7 +58,8 @@ summary.scalescape <- function(object, ...) {
     cat("\nFitted model conditional on the estimates of the range coefficients\n")
     show(summary(object$mod))
 
-    cat("\nWarning: the tests of the spatial coefficients are conditional on the optimal fit of the range. These P-values should not be trusted. P-values should be obtained by bootstrapping using dist_weight_boot\n\n")
+    cat("Warning: the tests of the spatial coefficients are conditional on the optimal fit of the range.
+        These P-values should not be trusted. P-values should be obtained by bootstrapping using dist_weight_boot", fill=TRUE)
 
   }else{
     cat("\nBootstrapping of coefficients involving spatial terms\n")
