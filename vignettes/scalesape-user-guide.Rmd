@@ -2,26 +2,216 @@
 title: "Scalescape User Guide"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Scalesape User Guide}
+  %\VignetteIndexEntry{Scalescape User Guide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+The following examples follow the article Lowe et al. 2022. Data for these example were simulated using empirical data from a landscape-scale experiment examining the effects of local and landscape drivers of wild bee communities in an agricultural region of Wisconsin, USA. In this experiment, 18 commercial cucumber fields were selected along a gradient from crop-dominated to forest- and grassland-dominated landscapes. Data collected at each cucumber field included air temperature, field margin flower cover and richness (collated into a “floral index”), and wild bee abundance.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
 
-```{r setup}
 library(scalescape)
-```
-
-The following example goes with the "Using 'scalescape'" section of Lowe et al. 2021. Data for this example were simulated using empirical data from a landscape-scale experiment examining the effects of local and landscape drivers of wild bee communities in an agricultural region of Wisconsin, USA. In this experiment, 18 commercial cucumber fields were selected along a gradient from crop-dominated to forest- and grassland-dominated landscapes. Data collected at each cucumber field included air temperature, field margin flower cover and richness (collated into a “floral index”), and wild bee abundance.
-
-#Running scalescape
-```{r}
 
 ```
+
+## Scalescape basics
+
+
+The examples here correspond to section 2.3 Running 'scalescape' in Lowe et al. 2022.
+
+
+First specify the landscape matrix, here for the binary (natural/non-natural) landcover raster:
+
+```{r landscape_matrix-basic, results='hide'}
+landcover.matrix <- landscape_matrix(raster=scalescape.landcover, sites=scalescape.sites, 
+                                     max.radius=8000, is.factor=FALSE)
+```
+
+
+Fit the "local" or null model, without landscape variables:
+
+```{r mod0-basic, results='hide'}
+mod0 <- lm(sqrt.abundance ~ floral.index + temp, data=scalescape.data)
+```
+
+
+Fit the distance-weighted model, with landscape variables:
+
+```{r dist_weight-basic, fig.height=4, fig.width=7, fig.align='center'}
+mod1 <- dist_weight(mod0=mod0, landscape.vars=list(natural.area=landcover.matrix), 
+                   landscape.formula='~ . + natural.area', data=scalescape.data)
+
+summary(mod1)
+```
+
+
+P-values for local variables as well as coefficient estimates from dist_weight should be accurate. However, for landscape variables p-values from dist_weight are conditional on the estimate of the range parameter leading to inflated type I error rates. Therefore p-values for landscape variables should come from <code>dist_weight_boot</code> instead.
+
+
+Note that for a final analysis, <code>nboot</code> should be 2000 for accurate p-values at $\alpha=0.05, but to increase computing speed we use <code>nboot=100</code> here.
+
+```{r dist_weight_boot-basic, results='hide', fig.height=4, fig.width=7, fig.align='center'}
+mod1.boot <- dist_weight_boot(mod.full=mod1, mod.reduced=mod0, nboot=100)
+```
+
+
+To visualize the weighted landscape effect on the response variable, use <code>mod$data.with.landscape</code>:
+
+```{r plot-basic, fig.height=5, fig.width=5, fig.align='center'}
+plot(sqrt.abundance ~ natural.area, data=mod1$data.with.landscape)
+```
+
+
+## More complex models
+
+This section details how to execute more complex models with <code>scalescape</code>, corresponding to those found in Appendix A of Lowe et al. 2022.
+
+
+### Multiple landscape predictors
+
+This example uses both the the binary natural/non-natural raster and a new raster representing the continuous landscape predictor, NDVI
+
+
+Specify a separate landscape matrix for each raster:
+
+```{r landscape_matrix-multiple, results='hide'}
+landcover.matrix <- landscape_matrix(scalescape.landcover, scalescape.sites, max.radius=8000)
+ndvi.matrix <- landscape_matrix(scalescape.ndvi, scalescape.sites, max.radius=8000)
+```
+
+
+Fit the "local" or null model, without landscape variables:
+
+```{r mod0-multiple, results='hide'}
+mod0 <- lm(sqrt.abundance ~ floral.index + temp, data=scalescape.data)
+```
+
+
+Fit the distance-weighted model, with landscape variables as a list of corresponding landscape matrices:
+
+```{r dist_weight-multiple, fig.height=6, fig.width=7, fig.align='center'}
+mod2 <- dist_weight(mod0 = mod0, landscape.vars = list(natural.area = landcover.matrix, ndvi=ndvi.matrix), 
+                   landscape.formula='~ . + natural.area + ndvi', data=scalescape.data)
+
+summary(mod2)
+```
+
+
+If you wish to include an interaction term, you can simply add it to <code>landscape.formula</code>:
+
+```{r dist_weight-interaction, fig.height=6, fig.width=7, fig.align='center', results='hide'}
+mod3 <- dist_weight(mod0 = mod0, landscape.vars = list(natural.area = landcover.matrix, ndvi=ndvi.matrix), 
+                   landscape.formula='~ . + natural.area*ndvi', data = scalescape.data)
+
+summary(mod3)
+```
+
+
+Specify the model for <code>dist_weight_boot()</code> to compare the model with and without both landscape variables
+
+```{r dist_weight_boot-multiple, results='hide', fig.height=4, fig.width=10.5, out.width='90%', fig.align='center'}
+mod2.boot. <- dist_weight_boot(mod.full=mod2, mod.reduced=mod0, nboot=100)
+```
+
+
+Note that this will produce an aggregate p-value for all model terms that represent or contain a landscape predictor, including interactions between local and landscape predictors. In other words, this p-value represents the answer to the question "are all of the terms involving a landscape predictor significant?"
+
+
+If you wish to produce a separate p-value for a particular landscape term in the model, you will use <code>dist_weight()</code> to create both a full and a reduced model representing the hypothesis you wish to test.
+
+
+The following example tests the independent effect of NDVI. To do this you will run <code>dist_weight()</code> twice, first to create a full model that includes both natural area and NDVI (this is the same model as <code>mod2</code> above), and again to create a reduced model containing only natural area (this is the same model as <code>mod1</code> above):
+
+Then, run <code>dist_weight_boot()</code> to compare the full model with natural area and NDVI (<code>mod</code>) to the reduced model containing only natural.area (<code>mod1</code>)
+
+```{r dist_weight_boot-ndvi, results='hide', fig.height=4, fig.width=10.5, out.width='90%', fig.align='center'}
+mod2.boot.ndvi <- dist_weight_boot(mod.full=mod2, mod.reduced=mod1, nboot=100)
+```
+
+
+
+### Polynomial models
+
+For this example, we will again use the binary landcover raster.
+
+Specify the landscape matrix:
+
+```{r landscape_matrix-poly, results='hide'}
+landcover.matrix <- landscape_matrix(raster=scalescape.landcover, sites=scalescape.sites, 
+                                     max.radius=8000, is.factor=FALSE)
+```
+
+
+Fit the "local" or null model, without landscape variables:
+
+```{r mod0-poly, results='hide'}
+mod0 <- lm(sqrt.abundance ~ floral.index + temp, data=scalescape.data)
+```
+
+
+Fit the distance-weighted model, with landscape variables natural area and natural area squared
+(In <code>landscape.formula</code>, <code>I()</code> must be used to identify the polynomial terms.)
+
+```{r dist_weight-poly, fig.height=4, fig.width=7, fig.align='center'}
+mod4 <- dist_weight(mod0 = mod0, landscape.vars = list(natural.area = landcover.matrix), 
+                   landscape.formula='~ . + natural.area + I(natural.area^2)', data = scalescape.data)
+
+summary(mod4)
+```
+
+
+Get accurate p-values by bootstrapping
+
+```{r dist_weight_boot-poly, results='hide', fig.height=4, fig.width=7, fig.align='center'}
+mod2.boot.poly <- dist_weight_boot(mod.full=mod4, mod.reduced=mod1, nboot=100)
+```
+
+
+### GLS models to account for spatial autocorrelation
+
+<code>scalescape</code> also gives the option to run GLS models, which account for spatial correlation between sites. In a GLS model, the spatial correlation is incorporated into the random effects and the model tests the hypothesis that sites that are closer together will be more similar. If the log likelihoods for a non-GLS model and a GLS model differ by >2, then spatial correlation has a significant impact on your results. However, a difference of anything more than 0 still means that spatial correlation has some effect
+
+We can run GLS models in <code>scalescape</code> using the <code>nlme</code> package
+```{r nlme, results='hide'}
+library(nlme)
+```
+
+
+Specify the landscape matrix as above
+
+```{r landscape_matrix-gls, results='hide'}
+landcover.matrix <- landscape_matrix(raster=scalescape.landcover, sites=scalescape.sites, 
+                                     max.radius=8000, is.factor=FALSE)
+```
+
+
+Fit the null model without landscape variables. Note that this is different for GLS models than the models above.
+```{r mod0-gls}
+mod0.gls <- gls(sqrt.abundance ~ floral.index + temp, scalescape.data, method="ML", 
+                correlation=corGaus(form = ~ lon + lat, nugget=T))
+```
+
+
+Fit the full model
+
+```{r dist_weight-gls, fig.height=4, fig.width=7}
+mod.gls <- dist_weight(mod0=mod0.gls, landscape.vars=list(natural.area=landcover.matrix), 
+                       landscape.formula='~ . + natural.area', data=scalescape.data)
+summary(mod.gls)
+```
+
+
+Run the bootstrap
+
+```{r dist_weight_boot-gls, results='hide', fig.height=4, fig.width=7}
+mod.gls.boot <- dist_weight_boot(mod.full=mod.gls, mod.reduced=mod0.gls, nboot=100)
+```
+
+
+Note that for this and other datasets with small sample sizes, <code>gls()</code> may produce warnings about singular convergence. Only the bootstrap datasets that converge go into the final p-value estimate, so this decreases the effective <code>nboot</code>. The number of successful bootstraps is given in the model output as the "Number of bootstrapped datasets successfully refit"
 
