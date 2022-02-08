@@ -114,7 +114,7 @@ summary(mod3)
 
 Specify the model for <code>dist_weight_boot()</code> to compare the model with and without both landscape variables
 
-```{r dist_weight_boot-multiple, results='hide', fig.height=4, fig.width=10.5, out.width='90%', fig.align='center'}
+```{r dist_weight_boot-multiple, results='hide', fig.height=4, fig.width=10.5, fig.align='center'}
 mod2.boot. <- dist_weight_boot(mod.full=mod2, mod.reduced=mod0, nboot=100)
 ```
 
@@ -129,7 +129,7 @@ The following example tests the independent effect of NDVI. To do this you will 
 
 Then, run <code>dist_weight_boot()</code> to compare the full model with natural area and NDVI (<code>mod</code>) to the reduced model containing only natural.area (<code>mod1</code>)
 
-```{r dist_weight_boot-ndvi, results='hide', fig.height=4, fig.width=10.5, out.width='90%', fig.align='center'}
+```{r dist_weight_boot-ndvi, results='hide', fig.height=4, fig.width=10.5, fig.align='center'}
 mod2.boot.ndvi <- dist_weight_boot(mod.full=mod2, mod.reduced=mod1, nboot=100)
 ```
 
