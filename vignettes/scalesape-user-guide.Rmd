@@ -53,7 +53,7 @@ summary(mod1)
 P-values for local variables as well as coefficient estimates from dist_weight should be accurate. However, for landscape variables p-values from dist_weight are conditional on the estimate of the range parameter leading to inflated type I error rates. Therefore p-values for landscape variables should come from <code>dist_weight_boot</code> instead.
 
 
-Note that for a final analysis, <code>nboot</code> should be 2000 for accurate p-values at $\alpha=0.05, but to increase computing speed we use <code>nboot=100</code> here.
+Note that for a final analysis, <code>nboot</code> should be 2000 for accurate p-values at $\alpha$=0.05, but to increase computing speed we use <code>nboot=100</code> here.
 
 ```{r dist_weight_boot-basic, results='hide', fig.height=4, fig.width=7, fig.align='center'}
 mod1.boot <- dist_weight_boot(mod.full=mod1, mod.reduced=mod0, nboot=100)
